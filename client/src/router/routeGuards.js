@@ -1,4 +1,4 @@
-import {HttpActivitiesService} from "@/services/httpActivitiesService";
+import {HttpActivitiesService} from "@/services/http/httpActivitiesService";
 import store from '@/store/index'
 
 export const fetchActivities = async ({name, matched}, from, next) => {
@@ -16,7 +16,6 @@ export const setModalData = ({params}, from, next) => {
     store.commit('setSelectedActivity', params.id)
     if(store.state.selectedActivity){
     store.commit('setShowView', true)
-        console.log('durp')
     next()
     }else{
         next(false);

@@ -4,11 +4,6 @@ import router from './router';
 import store from './store';
 import './assets/global.css'
 
-new Vue({
-  store,
-  // ... other options
-}).$mount('#app');
-
 
 Vue.config.productionTip = false;
 
@@ -17,3 +12,6 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app');
+
+
+

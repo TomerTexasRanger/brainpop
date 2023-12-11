@@ -3,28 +3,62 @@
     --search-button-active: rgba(0, 128, 129, 0.25);
     --search-text: #9daeb0;
     --heading: #343a41;
-    --months: rgba(106,110,116,255);
-    --filter-outline: rgba(106,110,116,255);
-    --container-outline: rgba(218,218,218,255);
+    --months: rgba(106, 110, 116, 255);
+    --filter-outline: rgba(106, 110, 116, 255);
+    --container-outline: rgba(218, 218, 218, 255);
 }
+
+html {
+    box-sizing: border-box;
+    font-size: 1.6vw;
+}
+
 body {
     font-family: 'Alexandria', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: 0 10%;
+    padding: 0 15%;
 }
-h1, h2{
-color: var(--heading);
-}
-input{
-color: var(--search-text);
+
+h1, h2, h3 {
+    color: var(--heading);
+    margin: 0;
+    font-weight: 500;
+    letter-spacing: -1px;
 
 }
 
-/* In your main.css or similar */
-html {
+h1 {
+    font-size: 2.1vw;
+}
+
+h2 {
+    font-size: 1.8vw;
+}
+
+h3 {
+    font-size: 1.3vw;
+}
+
+input {
+    color: var(--search-text);
+
+}
+input[type="text"] {
+    border: none;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: medium;
     box-sizing: border-box;
-    /* Set up fonts, colors, etc., that are common across the application */
+}
+button{
+    border: none;
+    background-color: transparent;
+    font-weight: bold;
+    cursor: pointer;
 }
 
 *, *:before, *:after {

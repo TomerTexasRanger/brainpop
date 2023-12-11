@@ -1,59 +1,3 @@
-<!--<template>-->
-<!--  <div class="search-container">-->
-<!--    <input class="search-input" type="text"  v-model="searchTerm" placeholder="Search Timeline" @keyup.enter="emitSearch">-->
-<!--    <button class="search-button" @click="emitSearch"><i class="fas fa-search"></i></button>-->
-<!--  </div>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--export default {-->
-<!--  name: 'base-search',-->
-<!--  data() {-->
-<!--    return {-->
-<!--      searchTerm: '',-->
-<!--    };-->
-<!--  },-->
-<!--  methods: {-->
-<!--    emitSearch() {-->
-<!--      this.$emit('search', this.searchTerm);-->
-<!--    }-->
-<!--  }-->
-<!--};-->
-<!--</script>-->
-
-<!--<style scoped>-->
-<!--.search-container {-->
-<!--  display: flex;-->
-<!--}-->
-
-<!--.search-input {-->
-<!--  width: 100%;-->
-<!--  padding: 10px;-->
-<!--  border: 1px solid #ccc;-->
-<!--  border-inline-end: none ;-->
-<!--  border-radius: 4px;-->
-<!--  border-end-end-radius: 0;-->
-<!--  border-start-end-radius: 0;-->
-<!--  font-size: 16px;-->
-<!--}-->
-
-<!--.search-button {-->
-<!--  right: 0;-->
-<!--  top: 0;-->
-<!--  border: none;-->
-<!--  border-end-end-radius: 4px;-->
-<!--  border-start-end-radius: 4px;-->
-<!--  background: var(&#45;&#45;search-button) none;-->
-<!--  padding: 10px;-->
-<!--  cursor: pointer;-->
-<!--}-->
-<!--.search-button i{-->
-<!--  color: white;-->
-<!--}-->
-
-<!--</style>-->
-
-
 <template>
   <div class="search-container">
     <input
@@ -74,7 +18,7 @@
       </li>
     </ul>
     <button class="search-button" @click="emitSearch">
-      <i class="fas fa-search"></i>
+      <i class="fa fa-search"></i>
     </button>
   </div>
 </template>
@@ -85,7 +29,7 @@ export default {
   data() {
     return {
       searchTerm: '',
-      suggestions: ['cells', 'dogs','dogs','dogs','dogs','dogs', 'dogs','dogs','dogs','dogs','dogs','dogs','dogs','dogs','dogs'], // This should be populated with your autocomplete suggestions.
+      suggestions: ['cells', 'dogs','dogs','dogs','dogs','dogs',], // This should be populated with your autocomplete suggestions.
       filteredSuggestions: []
     };
   },
@@ -108,7 +52,6 @@ export default {
       this.emitSearch();
     }
   },
-  // You might want to add a watcher or a computed property if your suggestions are dynamic or come from an API.
 };
 </script>
 
@@ -128,20 +71,21 @@ export default {
   list-style: none;
   padding: 0;
   margin: 0;
-  border: 1px solid #ccc;
+  border: 0.09rem solid #ccc;
   border-top: none;
-  height: 200px;
+  height: 8rem;
   overflow: auto;
   scrollbar-track-color: #00a3f5;
 }
 
 .suggestions-list li {
-  padding: 10px;
+  padding: 0.3rem;
   cursor: pointer;
+  font-size: 0.8rem;
 }
 
 .suggestions-list li:hover {
-  background-color: #f0f0f0;
+  background-color: transparent;
 }
 
 .search-container {
@@ -150,24 +94,26 @@ export default {
 
 .search-input {
   width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
+  padding: 0.3rem;
+  border: 0.09rem solid #ccc;
   border-inline-end: none;
   border-radius: 4px;
   border-end-end-radius: 0;
   border-start-end-radius: 0;
-  font-size: 16px;
+  font-size: 0.8rem;
 }
-
+.search-input:-webkit-any-link:focus{
+  background-color: transparent!important;
+  border: 1px solid  #ccc ;
+}
 .search-button {
-  right: 0;
-  top: 0;
   border: none;
   border-end-end-radius: 4px;
   border-start-end-radius: 4px;
   background: var(--search-button) none;
-  padding: 10px;
+  padding: 0.4rem;
   cursor: pointer;
+
 }
 
 .search-button i {

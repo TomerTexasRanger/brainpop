@@ -1,46 +1,67 @@
 <template>
   <div class="card">
-    <div class="card-icon">
-      <div :class=card.product class="icon-background">
-        <img alt="sd" :src=card.topic_data.icon_path>
+
+    <div :class="{'hidden-card': hidden}" class="card-content" >
+      <div class="card-icon">
+        <div :class=card.product class="icon-background">
+          <img class="card-icon-img" :alt=card.displayTitle :src=card.topicData.iconPath>
+        </div>
       </div>
-    </div>
-    <div class="card-heading">
-      <div>
-        <h3>{{ card.topic_data.name }} {{card.resource_type}}</h3>
+      <div class="card-heading">
+        <div>
+          <h3>{{ card.displayTitle }}</h3>
+        </div>
+        <small>{{card.createdDate}}</small>
       </div>
-      <small>{{ new Date(card.d_created * 1000).toDateString() }}</small>
+      <div class="card-data" v-if="card.score">Score: {{ card.score }}/{{
+          card.possibleScore
+        }}
+      </div>
+      <button class="action-btn" @click="handleAction">
+        <i class="fa fa-eye" style="font-size:100%"></i>
+
+        <span>View work</span>
+      </button>
+
     </div>
-    <div class="card-data" v-if="card.score">Score: {{ card.score }}/{{ card.possible_score }}</div>
-    <button class="action-btn" @click="handleAction"><i class="far fa-eye"></i>View work</button>
+    <button @click="setHidden" class="card-hide-icon"><i :class="{'fa fa-eye-slash' : !hidden, 'fa fa-eye': hidden}"></i>
+    </button>
+    <div class="hidden-icon" v-if="hidden">
+      <img alt="hidden icon" src="@/assets/brain-pop-guy.png">
+    </div>
   </div>
+
 </template>
 
 <script>
 export default {
   name: 'base-card',
-
+data(){
+  return {
+    hidden: false
+  };
+},
   props: {
     card: {
-      id: Number,
-      resource_type: String,
-      score: Number,
-      possible_score: Number,
-      product: String,
-      d_created: String,
-      topic_data: {
-        name: String,
-        icon_path: String
-      },
-      comment: String,
-      required: true
+      type: Object,
+      default: () => ({}),
+      required: false
     },
   },
   methods: {
     handleAction() {
       this.$emit('card-action', this.card);
+    },
+    setHidden(){
+      this.card['hidden'] = !this.hidden;
+      // this.$emit('set-hidden', this.card.id);
+
+      this.hidden = !this.hidden
     }
   },
+
+
+
 
 };
 </script>
@@ -49,10 +70,20 @@ export default {
 
 .card {
   display: flex;
+  background: white;
+  border: 0.2rem solid var(--container-outline);
+  border-radius: 6px;
+  padding: 0.8%;
+  position: relative;
+
+}
+
+.card-content {
+  padding: 1% 1% 1%;
+  flex-grow: 1;
+  display: flex;
   align-items: center;
-//justify-content: space-between; padding: 2% 2% 2%;
   gap: 1rem;
-//margin-bottom: 10px; background: white; border: 2px solid var(--container-outline); border-radius: 6px;
 }
 
 .card-data {
@@ -66,21 +97,11 @@ export default {
   font-weight: bold;
   font-size: 1rem;
   display: flex;
-  gap: 2px;
+  gap: 0.2rem;
   align-items: center;
   cursor: pointer;
 }
 
-.icon-background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #00a3f5;
-  border-radius: 50%;
-  width: 100%;
-  padding: 0.5rem;
-
-}
 
 .bp {
   background-color: var(--search-button);
@@ -102,21 +123,49 @@ export default {
 
 }
 
-.card-heading h3 {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #333;
-}
-.card-heading small{
+.card-heading small {
   color: var(--months);
 }
+
 .card-icon {
   margin-bottom: 0.8rem;
+  max-width: 5%;
+
 }
 
+.icon-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: fit-content;
+  padding: 0.5rem;
 
-.card img {
-  width: 40px;
+}
+
+.card-icon-img {
+  width: 100%;
+}
+
+.card-hide-icon {
+  display: flex;
+  justify-content: flex-end;
+  font-size: 1rem;
+}
+
+.hidden-icon {
+  position: absolute;
+  width: 4rem;
+  left: 50%;
+}
+
+.hidden-icon img {
+  width: 100%;
+}
+.hidden-card{
+  background-color: transparent;
+  pointer-events: none;
+  filter: blur(5px);
 }
 
 </style>

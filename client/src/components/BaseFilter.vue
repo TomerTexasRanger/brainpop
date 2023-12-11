@@ -3,9 +3,9 @@
   <button
     class="filter"
     :key="filter"
-    :class="{ 'active': selectedFilter === filter }"
+    :class="{ 'active': isSelected }"
     @click="applyFilter(filter)">
-    <i class="fas fa-check-circle"></i>    {{ filter }}
+    <i class="fa fa-check-circle"></i>    {{ filter }}
   </button>
 </template>
 
@@ -16,18 +16,23 @@ export default {
     filter: {
       type: String,
       default: () => ''
-    }
+    },
+    selectedFilter: String
   },
   data() {
     return {
-      selectedFilter: null,
+      isSelected: false,
     };
   },
   methods: {
     applyFilter(filter) {
-      this.selectedFilter = filter;
-      this.$emit('filter-changed', filter);
+      this.$emit('select-filter', filter);
     }
+  },
+  watch:{
+    selectedFilter(newVal){
+      this.isSelected = newVal === this.filter;
+    },
   }
 };
 </script>

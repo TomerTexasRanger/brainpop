@@ -1,4 +1,4 @@
-import {HttpService} from "@/services/httpService";
+import {HttpService} from "@/services/http/httpService";
 
 export class HttpActivitiesService extends HttpService{
   constructor() {

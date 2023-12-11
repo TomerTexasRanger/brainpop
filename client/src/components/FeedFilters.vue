@@ -1,6 +1,6 @@
 <template>
   <div class="filters">
-    <base-filter v-for="filter in filterOptions" :key="filter" :filter=filter></base-filter>
+    <base-filter v-for="filter in filterOptions" :key="filter" :selectedFilter="selectedFilter" :filter=filter @select-filter="applyFilter"></base-filter>
   </div>
 </template>
 

@@ -23,7 +23,7 @@ const routes = [
       component: AppFeed,
       beforeEnter:  fetchActivities,
       children: [
-        {path: 'view/:id',  name:'view_v2', component: FeedItemView, props: true}
+        {path: 'view/:id',  name:'view_v2', component: FeedItemView,  beforeEnter: setModalData}
       ]
     },
     {path: '*', redirect: 'v1'},

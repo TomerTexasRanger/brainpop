@@ -3,17 +3,21 @@
     <h1>Timeline</h1>
     <button @click="routeDurp()">hurf durf</button>
     <base-search class="feed-search" @search="handleSearch"></base-search>
+    <h2>
+     <span>Filters:</span>
     <feed-filters :filterOptions="filterOptions" @filter-changed="handleFilterChange"/>
+    </h2>
     <div>
-      <base-group v-for="monthGroup in paginatedActivities"
+      <base-group v-for="(monthGroup, index) in paginatedActivities"
                   :key="monthGroup.name"
                   :group-name="monthGroup.month"
                   :group="monthGroup.activities"
+                  :last-index="index === paginatedActivities.length - 1"
                   @group-card-action="handleViewWork"
       ></base-group>
       <div class="load-more-row">
         <button class="load-more-btn" v-if="hasMoreActivities" @click="loadMore"><small><i
-            class="fas fa-angle-down"></i></small> Load more
+          class="fa fa-angle-down"></i></small> Load more
         </button>
       </div>
     </div>
@@ -35,7 +39,7 @@ import FeedFilters from "@/components/FeedFilters.vue";
 import FeedItemView from "@/components/FeedItemView.vue";
 import BaseGroup from "@/components/BaseGroup.vue";
 import BaseSearch from "@/components/BaseSearch.vue";
-import router from "@/router";
+import {ACTIVITY_FEED_FILTERS} from "@/resources/const";
 
 
 export default {
@@ -48,19 +52,19 @@ export default {
   },
   data() {
     return {
-      filterOptions: ['All Work', 'Movie', 'Quiz', 'Easy Quiz', 'Make-a-Map'],
+      filterOptions: ACTIVITY_FEED_FILTERS,
     };
   },
   computed: {
     ...mapState(['activities', 'selectedActivity', 'searchTerm', 'selectedFilter', 'showZoomModal']),
-    ...mapGetters(['paginatedActivities', 'groupedActivities', 'currentPage', 'pageSize', 'showZoomView', 'getSelectedActivity']),
+    ...mapGetters(['paginatedActivities', 'currentPage', 'pageSize', 'showZoomView', 'getSelectedActivity']),
     hasMoreActivities() {
       return this.paginatedActivities.length < this.activities.length;
     },
 
   },
   methods: {
-    ...mapMutations(['setSelectedActivity', 'nextPage', 'setSearchTerm', 'setSelectedFilter', 'setShowView']),
+    ...mapMutations(['setSelectedActivity', 'nextPage', 'setSearchTerm', 'setSelectedFilter', 'setShowView', 'setActivities']),
     routeDurp() {
       this.$router.push({name: 'v2'})
     },
@@ -74,10 +78,9 @@ export default {
       this.setSelectedFilter(selectedFilter);
     },
     handleViewWork(activity) {
-      // this.setSelectedActivity(activity.id)
-      //   this.setShowView(true);
       this.$router.push({name: `view_${this.$route.name}`, params: {id: activity.id}}).finally()
     },
+
     handleCloseModal() {
       this.setShowView(false);
       this.setSelectedActivity(null);
@@ -88,6 +91,11 @@ export default {
 }
 </script>
 <style>
+.activities-feed h2 span{
+  margin: 0 0 10px;
+  font-weight: 300;
+  font-size: 1.3rem;
+}
 .feed-search {
   width: 30%;
   margin-bottom: 20px;
