@@ -1,28 +1,28 @@
 <template>
   <div class="card">
-
-    <div :class="{'hidden-card': hidden}" class="card-content" >
+    <div :class="{'hidden-card': hidden}" class="card-content">
       <div class="card-icon">
         <div :class=card.product class="icon-background">
           <img class="card-icon-img" :alt=card.displayTitle :src=card.topicData.iconPath>
         </div>
       </div>
       <div class="card-heading">
-          <h4>{{ card.displayTitle }}</h4>
-        <small>{{card.createdDate.toLocaleString('en-US',{month:'short', day: '2-digit',year:'numeric',hour: 'numeric'})}}</small>
+        <h4>{{ card.displayTitle }}</h4>
+        <small>{{
+            card.createdDate.toLocaleString('en-US', {month: 'short', day: '2-digit', year: 'numeric', hour: 'numeric'})
+          }}</small>
       </div>
       <div class="card-data" v-if="card.hasScore">
         <span>Score</span>
-        <span class="card-data-score">{{ card.score }}/{{card.possibleScore }}</span>
+        <span class="card-data-score">{{ card.score }}/{{ card.possibleScore }}</span>
       </div>
       <button v-if="card.hasZoom" class="action-btn" @click="handleZoom">
         <i class="fa fa-eye" style="font-size:100%"></i>
-
         <span>View work</span>
       </button>
-
     </div>
-    <button @click="setHidden" class="card-hide-icon"><i :class="{'fa fa-eye-slash' : !hidden, 'fa fa-eye': hidden}"></i>
+    <button @click="setHidden" class="card-hide-icon"><i
+      :class="{'fa fa-eye-slash' : !hidden, 'fa fa-eye': hidden}"></i>
     </button>
     <div class="hidden-icon" v-if="hidden">
       <img alt="hidden icon" src="@/assets/brain-pop-guy.png">
@@ -34,11 +34,11 @@
 <script>
 export default {
   name: 'base-card',
-data(){
-  return {
-    hidden: false
-  };
-},
+  data() {
+    return {
+      hidden: false
+    };
+  },
   props: {
     card: {
       type: Object,
@@ -50,7 +50,7 @@ data(){
     handleZoom() {
       this.$emit('card-action', this.card);
     },
-    setHidden(){
+    setHidden() {
       this.card['hidden'] = !this.hidden;
       this.hidden = !this.hidden
     }
@@ -66,7 +66,6 @@ data(){
   border-radius: 6px;
   padding: 0.2rem 0.5rem;
   position: relative;
-
 }
 
 .card-content {
@@ -84,7 +83,8 @@ data(){
   display: flex;
   gap: 0.3rem;
 }
-.card-data .card-data-score{
+
+.card-data .card-data-score {
   font-weight: 600;
 }
 
@@ -96,8 +96,8 @@ data(){
   cursor: pointer;
   font-size: 0.8rem;
   font-weight: 600;
-
 }
+
 .card-heading {
   flex-grow: 1;
   align-self: baseline;
@@ -124,7 +124,6 @@ data(){
   border-radius: 50%;
   width: fit-content;
   padding: 0.5rem;
-
 }
 
 .card-icon-img {
@@ -146,10 +145,10 @@ data(){
 .hidden-icon img {
   width: 100%;
 }
-.hidden-card{
+
+.hidden-card {
   background-color: transparent;
   pointer-events: none;
   filter: blur(5px);
 }
-
 </style>

@@ -39,12 +39,6 @@ export default {
       required: false
     },
   },
-  data() {
-    return {
-      // isVisible: false,
-    };
-  },
-
   computed: {
     isVisible() {
       return !!this.card;
@@ -140,5 +134,18 @@ export default {
 .modal-heading small {
   color: var(--font-gray-light);
   font-size: 0.7rem;
+}
+
+@media (max-width: 992px){
+  .modal-content {
+    width: 80%;
+    height: 50%;
+    background: white;
+    padding: 0.1rem 0.5rem 1rem;
+    border-radius: 20px;
+    border: 4px solid var(--container-outline);
+    display: flex;
+    flex-direction: column;
+  }
 }
 </style>

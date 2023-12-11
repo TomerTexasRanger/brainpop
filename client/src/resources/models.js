@@ -17,7 +17,6 @@ class Activity {
     this.hasScore = false;
     this.hasZoom = false;
   }
-
   snakeCaseToCapitalized(str) {
     return str
       .split('_')
@@ -25,7 +24,6 @@ class Activity {
       .join(' ');
   }
 }
-
 class ScoreZoom extends Activity {
   constructor(data) {
     super(data);
@@ -33,13 +31,10 @@ class ScoreZoom extends Activity {
     this.hasZoom = true;
   }
 }
-
 class Zoom extends Activity {
   constructor(data) {
     super(data);
     this.hasZoom = true;
   }
 }
-
-
 export {Zoom, Activity, ScoreZoom}

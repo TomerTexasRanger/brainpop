@@ -1,11 +1,10 @@
 <template>
-
   <button
     class="filter"
     :key="filter"
     :class="{ 'active': isSelected }"
     @click="applyFilter(filter)">
-    <i v-if="isSelected" class="fa fa-check-circle"></i>    {{ filter }}
+    <i v-if="isSelected" class="fa fa-check-circle"></i>{{ filter }}
   </button>
 </template>
 

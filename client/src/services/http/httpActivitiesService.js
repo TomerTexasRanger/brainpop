@@ -1,11 +1,11 @@
 import {HttpService} from "@/services/http/httpService";
 
-export class HttpActivitiesService extends HttpService{
+export class HttpActivitiesService extends HttpService {
   constructor() {
     super();
   }
 
-   async index(endpoint) {
+  async index(endpoint) {
     try {
       return (await this.axios.get(`/activities/${endpoint}`)).data;
     } catch (error) {

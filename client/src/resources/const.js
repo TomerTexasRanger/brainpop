@@ -2,8 +2,6 @@ export const ACTIVITY_TYPES = {
   zoomAndScore: ['quiz', 'easy_quiz', 'challenge'],
   zoom: ['make_a_map', 'make_a_movie', 'word_play', 'draw_about_it'],
 }
-
-
 export const ACTIVITY_FEED_FILTERS = {
   ALL_WORK: 'All Work',
   MOVIE: 'Movie',

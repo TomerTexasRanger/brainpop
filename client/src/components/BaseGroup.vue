@@ -8,7 +8,6 @@
           :card="card"
           @card-action="handleGroupCardAction" @set-hidden="handleGroupCardSetHidden"></base-card>
         <div v-if="index === group.length - 1 && !lastIndex" class="line-through"></div>
-
       </div>
     </div>
   </div>

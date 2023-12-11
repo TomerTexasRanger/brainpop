@@ -9,9 +9,11 @@ export class ActivityFormattingService {
   constructor(data) {
     this.data = data;
   }
+
   get getData() {
     return this.data;
   }
+
   get getFormattedData() {
     return this.formattedData
   }
@@ -19,14 +21,17 @@ export class ActivityFormattingService {
   get getSorted() {
     return this.sortedByMonths;
   }
+
   sortByDate() {
     this.data = this.data.sort((a, b) => b.d_created - a.d_created);
     return this;
   }
+
   sliceArr({pageSize, currentPage}) {
     this.data = this.data.slice(0, pageSize * currentPage);
     return this;
   }
+
   groupByMonths() {
     this.sortedByMonths = this.data.reduce((acc, activity) => {
       const monthYear = activity.createdDate.toLocaleString('en', {month: 'long', year: 'numeric'});
@@ -59,6 +64,7 @@ export class ActivityFormattingService {
     }));
     return this;
   }
+
   createResource() {
     this.formattedData = this.data.map(activity => {
       if (ACTIVITY_TYPES.zoomAndScore.includes(activity.resource_type)) return new ScoreZoom(activity)

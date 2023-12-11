@@ -26,8 +26,6 @@
       </button>
     </form>
 </template>
-
-
 <script>
 export default {
   name: 'base-search',
@@ -79,7 +77,6 @@ export default {
   },
 };
 </script>
-
 
 <style scoped>
 .search-container {
@@ -148,32 +145,25 @@ export default {
   background-color: var(--font-gray-light);
 }
 
-
 .search-button i {
   color: white;
 }
 
-/* The scrollbar track (the part that the handle slides within) */
 .suggestions-list::-webkit-scrollbar-track {
   background: #f1f1f1;
   border-radius: 4px;
 }
 
-/* The draggable scrolling handle */
 .suggestions-list::-webkit-scrollbar-thumb {
-  background: var(--turquoise);
+  background: var(--font-gray-light);
   border-radius: 4px;
 }
 
-/* On hover of the scrolling handle */
 .suggestions-list::-webkit-scrollbar-thumb:hover {
   background: var(--border-gray-light);
 }
 
-/* The scrollbar itself (including track and handle) */
 .suggestions-list::-webkit-scrollbar {
-  width: 15px; /* You can set the width of the scrollbar here */
+  width: 15px;
 }
-
-
 </style>

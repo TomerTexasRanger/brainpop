@@ -78,7 +78,6 @@ export default new Vuex.Store({
       state.searchTerm = null;
       state.showZoomModal = false;
     }
-
   },
   actions: {
     processActivities({commit}, data) {
