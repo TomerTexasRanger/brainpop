@@ -8,16 +8,14 @@
         </div>
       </div>
       <div class="card-heading">
-        <div>
-          <h3>{{ card.displayTitle }}</h3>
-        </div>
-        <small>{{card.createdDate}}</small>
+          <h4>{{ card.displayTitle }}</h4>
+        <small>{{card.createdDate.toLocaleString('en-US',{month:'short', day: '2-digit',year:'numeric',hour: 'numeric'})}}</small>
       </div>
-      <div class="card-data" v-if="card.score">Score: {{ card.score }}/{{
-          card.possibleScore
-        }}
+      <div class="card-data" v-if="card.hasScore">
+        <span>Score</span>
+        <span class="card-data-score">{{ card.score }}/{{card.possibleScore }}</span>
       </div>
-      <button class="action-btn" @click="handleAction">
+      <button v-if="card.hasZoom" class="action-btn" @click="handleZoom">
         <i class="fa fa-eye" style="font-size:100%"></i>
 
         <span>View work</span>
@@ -49,20 +47,14 @@ data(){
     },
   },
   methods: {
-    handleAction() {
+    handleZoom() {
       this.$emit('card-action', this.card);
     },
     setHidden(){
       this.card['hidden'] = !this.hidden;
-      // this.$emit('set-hidden', this.card.id);
-
       this.hidden = !this.hidden
     }
   },
-
-
-
-
 };
 </script>
 
@@ -70,16 +62,15 @@ data(){
 
 .card {
   display: flex;
-  background: white;
-  border: 0.2rem solid var(--container-outline);
+  border: 0.09rem solid var(--border-gray-light);
   border-radius: 6px;
-  padding: 0.8%;
+  padding: 0.2rem 0.5rem;
   position: relative;
 
 }
 
 .card-content {
-  padding: 1% 1% 1%;
+  padding: 1rem 0.4rem;
   flex-grow: 1;
   display: flex;
   align-items: center;
@@ -87,50 +78,43 @@ data(){
 }
 
 .card-data {
-  color: var(--search-button);
+  color: var(--turquoise);
+  font-size: 0.8rem;
+  font-weight: 400;
+  display: flex;
+  gap: 0.3rem;
+}
+.card-data .card-data-score{
+  font-weight: 600;
 }
 
 .action-btn {
-  border: none;
-  background-color: transparent;
-  color: var(--search-button);
-  font-weight: bold;
-  font-size: 1rem;
+  color: var(--turquoise);
   display: flex;
   gap: 0.2rem;
   align-items: center;
   cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: 600;
+
 }
-
-
-.bp {
-  background-color: var(--search-button);
-}
-
-.bpjr {
-  background-color: #f6b80d;
-}
-
 .card-heading {
-
   flex-grow: 1;
   align-self: baseline;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  gap: 0.7rem;
-
-
+  gap: 0.4rem;
 }
 
 .card-heading small {
-  color: var(--months);
+  color: var(--font-gray-light);
+  font-size: 0.7rem;
 }
 
 .card-icon {
   margin-bottom: 0.8rem;
-  max-width: 5%;
-
+  max-width: 6%;
 }
 
 .icon-background {
@@ -150,7 +134,7 @@ data(){
 .card-hide-icon {
   display: flex;
   justify-content: flex-end;
-  font-size: 1rem;
+  font-size: 0.7rem;
 }
 
 .hidden-icon {

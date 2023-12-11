@@ -29,12 +29,10 @@ export class ActivityFormattingService {
   }
   groupByMonths() {
     this.sortedByMonths = this.data.reduce((acc, activity) => {
-      // const date = new Date(activity.d_created * 1000);
-      // const monthYear = date.toLocaleString('en', {month: 'long', year: 'numeric'});
+      const monthYear = activity.createdDate.toLocaleString('en', {month: 'long', year: 'numeric'});
 
-      if (!acc[activity.createdDate]) acc[activity.createdDate] = [];
-
-      acc[activity.createdDate].push(activity);
+      if (!acc[monthYear]) acc[monthYear] = [];
+      acc[monthYear].push(activity);
       return acc;
     }, {});
     return this;
@@ -63,14 +61,12 @@ export class ActivityFormattingService {
   }
   createResource() {
     this.formattedData = this.data.map(activity => {
-      if (ACTIVITY_TYPES.zoomAndScore[activity.resource_type]) return new ScoreZoom(activity)
-      else if (ACTIVITY_TYPES.zoom[activity.resource_type]) return new Zoom(activity)
+      if (ACTIVITY_TYPES.zoomAndScore.includes(activity.resource_type)) return new ScoreZoom(activity)
+      else if (ACTIVITY_TYPES.zoom.includes(activity.resource_type)) return new Zoom(activity)
       else return new Activity(activity)
     })
     return this;
   }
 
-  extractFilters(){
 
-  }
 }

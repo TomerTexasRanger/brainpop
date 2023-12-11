@@ -6,6 +6,7 @@
 
 <script>
 import BaseFilter from "@/components/BaseFilter.vue";
+import {ACTIVITY_FEED_FILTERS} from "@/resources/const";
 
 export default {
   name: 'feed-filters',
@@ -26,6 +27,9 @@ export default {
       this.selectedFilter = filter;
       this.$emit('filter-changed', filter);
     }
+  },
+  mounted() {
+    this.applyFilter(ACTIVITY_FEED_FILTERS['ALL_WORK'])
   }
 };
 </script>

@@ -7,7 +7,7 @@
         <base-card
           :card="card"
           @card-action="handleGroupCardAction" @set-hidden="handleGroupCardSetHidden"></base-card>
-        <div v-if="index === group.length - 1 && !lastIndex" class="line-threw"></div>
+        <div v-if="index === group.length - 1 && !lastIndex" class="line-through"></div>
 
       </div>
     </div>
@@ -45,26 +45,19 @@ export default {
 };
 </script>
 <style scoped>
-.group-container {
-
-}
-
-.line-through ::after {
+.line-through::after {
   content: "";
   line-height: 100%;
   margin: 0;
   width: 2px;
-  margin-inline-start: 4rem;
-  border-inline-end: 0.2rem solid var(--container-outline);
+  margin-inline-start: 3rem;
+  border-inline-end: 0.1rem solid var(--border-gray-light);
 }
 
 .group-container h3 {
-  margin: 0;
-  font-weight: 300;
-  font-size: 1.2rem;
-  background-color: #fcf8e5;
+  background-color: var(--background-gray-light);
   border-radius: 20px;
-  padding: 5px 20px;
+  padding: 0.2rem 1rem;
   width: fit-content;
 }
 </style>

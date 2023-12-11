@@ -5,7 +5,7 @@
     :key="filter"
     :class="{ 'active': isSelected }"
     @click="applyFilter(filter)">
-    <i class="fa fa-check-circle"></i>    {{ filter }}
+    <i v-if="isSelected" class="fa fa-check-circle"></i>    {{ filter }}
   </button>
 </template>
 
@@ -39,21 +39,19 @@ export default {
 
 <style scoped>
 .filter {
-  color: var(--search-button);
-  padding: 10px 10px;
-  border: 2px solid var(--search-button);
+  color: var(--turquoise);
+  padding: 0.3rem 0.4rem;
+  border: 2px solid var(--turquoise);
   border-radius: 5px;
-  cursor: pointer;
-  outline: none;
-  font-weight: bold;
-  letter-spacing: 1px;
+  font-size: 0.5rem;
+  font-weight: 600;
   background-color: white;
 }
 
 .filter.active,
 .filter:hover {
   background-color: var(--search-button-active);
-  border-color: var(--search-button);
+  border-color: var(--turquoise);
 }
 
 </style>

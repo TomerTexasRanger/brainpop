@@ -1,27 +1,32 @@
 <template>
-  <div class="search-container">
-    <input
-      class="search-input"
-      type="text"
-      v-model="searchTerm"
-      placeholder="Search Timeline"
-      @input="filterSuggestions"
-      @keyup.enter="emitSearch"
-    >
-    <ul v-if="filteredSuggestions.length" class="suggestions-list">
-      <li
-        v-for="(suggestion, index) in filteredSuggestions"
-        :key="index"
-        @click="selectSuggestion(suggestion)"
+    <form  class="search-container" @submit.prevent="emitSearch">
+      <input
+        class="search-input"
+        type="text"
+        v-model="searchTerm"
+        placeholder="Search Timeline"
+        @input="filterSuggestions"
+        @keydown.down="navigateSuggestions('down')"
+        @keydown.up="navigateSuggestions('up')"
+        @keydown.enter="selectSuggestionViaEnterKey"
       >
-        {{ suggestion }}
-      </li>
-    </ul>
-    <button class="search-button" @click="emitSearch">
-      <i class="fa fa-search"></i>
-    </button>
-  </div>
+      <ul v-if="filteredSuggestions.length" class="suggestions-list">
+        <li
+          v-for="(suggestion, index) in filteredSuggestions"
+          :key="index"
+          :class="{ 'active-suggestion': index === activeIndex }"
+          @click="selectSuggestion(suggestion)"
+          @mouseover="activeIndex = index"
+        >
+          {{ suggestion }}
+        </li>
+      </ul>
+      <button class="search-button" type="submit">
+        <i class="fa fa-search"></i>
+      </button>
+    </form>
 </template>
+
 
 <script>
 export default {
@@ -29,16 +34,25 @@ export default {
   data() {
     return {
       searchTerm: '',
-      suggestions: ['cells', 'dogs','dogs','dogs','dogs','dogs',], // This should be populated with your autocomplete suggestions.
-      filteredSuggestions: []
+      filteredSuggestions: [],
+      activeIndex: -1
     };
   },
+  props: {
+    suggestions: {
+      type: Array,
+      default: () => []
+    }
+  },
   methods: {
-    emitSearch() {
+    emitSearch(event) {
+      this.selectSuggestion(this.filteredSuggestions[this.activeIndex] || this.searchTerm);
       this.$emit('search', this.searchTerm);
       this.filteredSuggestions = [];
+      this.searchTerm = null;
     },
     filterSuggestions() {
+      this.activeIndex = -1; // Reset active index on input change
       if (!this.searchTerm) {
         this.filteredSuggestions = [];
         return;
@@ -47,13 +61,25 @@ export default {
         suggestion => suggestion.toLowerCase().includes(this.searchTerm.toLowerCase())
       );
     },
+    navigateSuggestions(direction) {
+      if (direction === 'down' && this.activeIndex < this.filteredSuggestions.length - 1) {
+        this.activeIndex++;
+      } else if (direction === 'up' && this.activeIndex > 0) {
+        this.activeIndex--;
+      }
+    },
+    selectSuggestionViaEnterKey() {
+      if (this.activeIndex !== -1) {
+        this.selectSuggestion(this.filteredSuggestions[this.activeIndex]);
+      }
+    },
     selectSuggestion(suggestion) {
       this.searchTerm = suggestion;
-      this.emitSearch();
     }
   },
 };
 </script>
+
 
 <style scoped>
 .search-container {
@@ -71,11 +97,11 @@ export default {
   list-style: none;
   padding: 0;
   margin: 0;
-  border: 0.09rem solid #ccc;
+  border: 0.09rem solid var(--border-gray-light);
   border-top: none;
   height: 8rem;
   overflow: auto;
-  scrollbar-track-color: #00a3f5;
+  scrollbar-track-color: var(--border-gray-light);
 }
 
 .suggestions-list li {
@@ -94,27 +120,34 @@ export default {
 
 .search-input {
   width: 100%;
-  padding: 0.3rem;
-  border: 0.09rem solid #ccc;
+  padding: 0.25rem;
+  border: 0.09rem solid var(--border-gray-light);
   border-inline-end: none;
   border-radius: 4px;
   border-end-end-radius: 0;
   border-start-end-radius: 0;
-  font-size: 0.8rem;
+  font-size: 0.6rem;
 }
-.search-input:-webkit-any-link:focus{
-  background-color: transparent!important;
-  border: 1px solid  #ccc ;
+
+.search-input:-webkit-any-link:focus {
+  background-color: transparent !important;
+  border: 1px solid var(--font-gray-light);
 }
+
 .search-button {
   border: none;
   border-end-end-radius: 4px;
   border-start-end-radius: 4px;
-  background: var(--search-button) none;
-  padding: 0.4rem;
+  background: var(--turquoise) none;
+  padding: 0.2rem 0.4rem;
   cursor: pointer;
-
+  font-size: 0.7rem;
 }
+
+.active-suggestion {
+  background-color: var(--font-gray-light);
+}
+
 
 .search-button i {
   color: white;
@@ -128,13 +161,13 @@ export default {
 
 /* The draggable scrolling handle */
 .suggestions-list::-webkit-scrollbar-thumb {
-  background: var(--search-text);
+  background: var(--turquoise);
   border-radius: 4px;
 }
 
 /* On hover of the scrolling handle */
 .suggestions-list::-webkit-scrollbar-thumb:hover {
-  background: var(--container-outline);
+  background: var(--border-gray-light);
 }
 
 /* The scrollbar itself (including track and handle) */

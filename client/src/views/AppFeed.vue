@@ -1,12 +1,17 @@
 <template>
   <div class="activities-feed">
-    <h1>Timeline</h1>
-    <button @click="routeDurp()">hurf durf</button>
-    <base-search class="feed-search" @search="handleSearch"></base-search>
-    <h2>
-     <span>Filters:</span>
-    <feed-filters :filterOptions="filterOptions" @filter-changed="handleFilterChange"/>
-    </h2>
+    <header>
+      <h1>Timeline</h1>
+      <div>
+        <router-link :to=toRoute>API: {{ toRoute }}</router-link>
+      </div>
+    </header>
+    <base-search :suggestions="getSuggestions" class="feed-search" @search="handleSearch"></base-search>
+    <div class="feed-filters">
+      <h3>Filters by:</h3>
+      <feed-filters :filterOptions="filterOptions" @filter-changed="handleFilterChange"/>
+    </div>
+
     <div>
       <base-group v-for="(monthGroup, index) in paginatedActivities"
                   :key="monthGroup.name"
@@ -15,8 +20,8 @@
                   :last-index="index === paginatedActivities.length - 1"
                   @group-card-action="handleViewWork"
       ></base-group>
-      <div class="load-more-row">
-        <button class="load-more-btn" v-if="hasMoreActivities" @click="loadMore"><small><i
+      <div  v-if="hasMoreActivities" class="load-more-row">
+        <button class="load-more-btn" @click="loadMore"><small><i
           class="fa fa-angle-down"></i></small> Load more
         </button>
       </div>
@@ -52,12 +57,13 @@ export default {
   },
   data() {
     return {
-      filterOptions: ACTIVITY_FEED_FILTERS,
+      filterOptions: Object.values(ACTIVITY_FEED_FILTERS),
+      toRoute: this.$route.name === 'v1' ? '/v2' : '/v1',
     };
   },
   computed: {
     ...mapState(['activities', 'selectedActivity', 'searchTerm', 'selectedFilter', 'showZoomModal']),
-    ...mapGetters(['paginatedActivities', 'currentPage', 'pageSize', 'showZoomView', 'getSelectedActivity']),
+    ...mapGetters(['paginatedActivities', 'currentPage', 'pageSize', 'showZoomView', 'getSelectedActivity','getSuggestions']),
     hasMoreActivities() {
       return this.paginatedActivities.length < this.activities.length;
     },
@@ -65,13 +71,12 @@ export default {
   },
   methods: {
     ...mapMutations(['setSelectedActivity', 'nextPage', 'setSearchTerm', 'setSelectedFilter', 'setShowView', 'setActivities']),
-    routeDurp() {
-      this.$router.push({name: 'v2'})
-    },
+
     loadMore() {
       this.nextPage();
     },
     handleSearch(searchTerm) {
+      // console.log(searchTerm)
       this.setSearchTerm(searchTerm);
     },
     handleFilterChange(selectedFilter) {
@@ -87,18 +92,32 @@ export default {
       this.$router.back();
     },
   },
+  watch: {
+    '$route'(to) {
+      this.toRoute = to.name === 'v1' ? '/v2' : '/v1';
+    }
+  },
+
 
 }
 </script>
 <style>
-.activities-feed h2 span{
-  margin: 0 0 10px;
-  font-weight: 300;
-  font-size: 1.3rem;
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
+
 .feed-search {
-  width: 30%;
-  margin-bottom: 20px;
+  width: 40%;
+  margin-bottom: 0.8rem;
+}
+.feed-filters{
+  margin-bottom: 0.8rem;
+}
+.feed-filters h3 {
+  margin-bottom: 0.8rem;
 }
 
 .load-more-btn {

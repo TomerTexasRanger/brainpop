@@ -1,7 +1,11 @@
 :root {
-    --search-button: #008081;
-    --search-button-active: rgba(0, 128, 129, 0.25);
-    --search-text: #9daeb0;
+    --turquoise: #008081;
+    --light-turquoise: #01cbcb;
+    --yellow: #f8b80e;
+    --search-button-active: rgba(0, 128, 129, 0.07);
+    --font-gray-light: #9daeb0;
+    --border-gray-light: #dadada;
+    --background-gray-light: #fcf8e5;
     --heading: #343a41;
     --months: rgba(106, 110, 116, 255);
     --filter-outline: rgba(106, 110, 116, 255);
@@ -17,33 +21,39 @@ body {
     font-family: 'Alexandria', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: 0 15%;
+    padding: 1% 15%;
+
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     color: var(--heading);
     margin: 0;
-    font-weight: 500;
     letter-spacing: -1px;
-
+padding: 0;
 }
 
 h1 {
-    font-size: 2.1vw;
+    font-size: 1.4rem;
+    font-weight: 500;
+
 }
 
 h2 {
-    font-size: 1.8vw;
+    font-size: 0.8rem;
+    font-weight: 300;
+
 }
 
 h3 {
-    font-size: 1.3vw;
+    font-size: 0.7rem;
+    font-weight: 300;
 }
 
-input {
-    color: var(--search-text);
-
+h4 {
+    font-size: 0.85rem;
+    font-weight: 500;
 }
+
 input[type="text"] {
     border: none;
     outline: none;
@@ -54,13 +64,20 @@ input[type="text"] {
     font-size: medium;
     box-sizing: border-box;
 }
-button{
+
+button {
     border: none;
     background-color: transparent;
     font-weight: bold;
     cursor: pointer;
 }
+.bp {
+    background-color: var(--light-turquoise);
+}
 
+.bpjr {
+    background-color: var(--yellow);
+}
 *, *:before, *:after {
     box-sizing: inherit;
 }
