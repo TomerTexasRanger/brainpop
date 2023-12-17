@@ -1,15 +1,15 @@
 <template>
   <div class="activities-feed">
     <header>
-      <h1>Timeline</h1>
+      <h1 class="bp-font-bold bp-font-xl">Timeline</h1>
       <div>
-        <router-link :to=toRoute>API: {{ toRoute }}</router-link>
+        <router-link class="bp-font-md bp-font-bold" :to=toRoute>API: {{ toRoute }}</router-link>
       </div>
     </header>
     <base-search :suggestions="getSuggestions" class="feed-search"
                  @search="handleSearch"></base-search>
     <div class="feed-filters">
-      <h3>Filters by:</h3>
+      <h2 class="bp-font-light bp-font-md">Filter by:</h2>
       <feed-filters :filterOptions="filterOptions" @filter-changed="handleFilterChange"/>
     </div>
 
@@ -21,15 +21,49 @@
                   :last-index="index === paginatedActivities.length - 1"
                   @group-card-action="handleViewWork"
       ></base-group>
-      <div v-if="hasMoreActivities" class="load-more-row">
-        <button class="load-more-btn" @click="loadMore"><small><i
-          class="fa fa-angle-down"></i></small> Load more
-        </button>
+      <div class="load-more-row">
+        <base-button :btn-class="{'bp-font-md bp-font-normal' : true}" v-if="hasMoreActivities" :button-icon="'fa fa-angle-down'" :text="'Show more'"
+                     @btn-action="loadMore"></base-button>
       </div>
     </div>
-    <feed-item-view v-if="showZoomView" :card="getSelectedActivity"
-                    @close-modal="handleCloseModal"/>
+    <base-modal v-if="showZoomView">
+      <base-card :card-vertical="true">
+        <template #CardActionBtn>
+          <base-button @btn-action="handleCloseModal" :text="''"
+                       :button-icon="'fa-regular fa-times-circle'"
+                       :btn-class="{'bp-font-lg': true, 'bp-text-light-gray': true}"></base-button>
+        </template>
+        <template #cardIcon>
+          <base-card-icon  :src="getSelectedActivity.topicData.iconPath" :alt="getSelectedActivity.displayTitle"
+                           :icon-class="{[getSelectedActivity.product]: true}">
+            <base-tag v-if="getSelectedActivity.product === 'bpjr'" :tag-class="{'bg-yellow': true}"
+                      :text="'jr.'"></base-tag>
+          </base-card-icon>
+        </template>
+        <template #cardTitle>
+          <base-card-title>
+            <template #mainTitle><h3 class="bp-font-md bp-font-normal">{{
+                getSelectedActivity.displayTitle
+              }}</h3></template>
+            <template #secTitle><small
+              class="bp-font-light bp-font-sm">{{ getSelectedActivity.createdDate | formatDate }}</small>
+            </template>
+          </base-card-title>
+        </template>
+        <template #cardData>
 
+          <div class="">
+            <p class="bp-font-md bp-font-light">{{getSelectedActivity.comment}}</p>
+          </div>
+          <div v-if="getSelectedActivity.hasScore"
+               class="bp-text-turquoise bp-d-flex align-items-end bp-flex-gap-2">
+            <span class="bp-font-sm bp-font-light">Score</span>
+            <span class="bp-font-bold bp-font-sm">{{ getSelectedActivity.score }}/{{ getSelectedActivity.possibleScore }}</span>
+          </div>
+        </template>
+
+      </base-card>
+    </base-modal>
 
   </div>
 </template>
@@ -38,16 +72,27 @@
 import {mapState, mapMutations, mapGetters} from 'vuex';
 
 import FeedFilters from "@/components/FeedFilters.vue";
-import FeedItemView from "@/components/FeedItemView.vue";
 import BaseGroup from "@/components/BaseGroup.vue";
 import BaseSearch from "@/components/BaseSearch.vue";
 import {ACTIVITY_FEED_FILTERS} from "@/resources/const";
+import BaseCard from "@/components/BaseCard.vue";
+import BaseModal from "@/components/BaseModal.vue";
+import BaseButton from "@/components/BaseButton.vue";
+import BaseCardIcon from "@/components/BaseCardIcon.vue";
+import BaseCardTitle from "@/components/BaseCardTitle.vue";
+import BaseTag from "@/components/BaseTag.vue";
+
 export default {
   name: 'app-feed',
   components: {
+    BaseTag,
+    BaseCardTitle,
+    BaseCardIcon,
+    BaseButton,
+    BaseModal,
+    BaseCard,
     BaseSearch,
     BaseGroup,
-    FeedItemView,
     FeedFilters,
   },
   data() {
@@ -87,7 +132,7 @@ export default {
   },
   watch: {
     '$route'(to) {
-      this.toRoute = to.name === 'v1' ? '/v2' : '/v1';
+      this.toRoute = to.name.includes('v1') ? '/v2' : '/v1';
     }
   },
 }
@@ -96,33 +141,21 @@ export default {
 header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.5rem;
+  align-items: baseline;
+  margin-bottom: 1rem;
 }
 
 .feed-search {
-  width: 40%;
-  margin-bottom: 0.8rem;
+  width: 35%;
+  margin-bottom: 1rem;
 }
 
 .feed-filters {
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
-.feed-filters h3 {
-  margin-bottom: 0.8rem;
-}
-
-.load-more-btn {
-  border: none;
-  background-color: transparent;
-  color: var(--turquoise);
-  font-weight: bold;
-  margin: 10px 0;
-  display: flex;
-  align-items: flex-start;
-  gap: 2px;
-  cursor: pointer;
+.feed-filters h2 {
+  margin-bottom: 1rem;
 }
 
 .load-more-row {
@@ -135,5 +168,15 @@ header {
   .feed-search {
     width: 70%;
   }
+  .feed-filters {
+    overflow: auto;
+  }
 }
+
+@media (max-width: 576px) {
+  .feed-search {
+    width: 100%;
+  }
+}
+
 </style>

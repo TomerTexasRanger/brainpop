@@ -1,16 +1,18 @@
 <template>
   <div class="filters">
-    <base-filter v-for="filter in filterOptions" :key="filter" :selectedFilter="selectedFilter" :filter=filter @select-filter="applyFilter"></base-filter>
+    <base-button v-for="filter in filterOptions" :key="filter" :text="filter"
+                 :button-icon="selectedFilter === filter ? 'fa fa-check-circle' : ''"
+                 :btn-class="{'with-border': true, 'active': selectedFilter === filter, 'bp-font-md bp-font-normal' : true}" @btn-action="applyFilter"></base-button>
   </div>
 </template>
 
 <script>
-import BaseFilter from "@/components/BaseFilter.vue";
 import {ACTIVITY_FEED_FILTERS} from "@/resources/const";
+import BaseButton from "@/components/BaseButton.vue";
 
 export default {
   name: 'feed-filters',
-  components: {BaseFilter},
+  components: {BaseButton},
   props: {
     filterOptions: {
       type: Array,
@@ -39,6 +41,12 @@ export default {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-bottom: 20px;
 }
+@media (max-width: 992px) {
+  .filters {
+    flex-wrap: nowrap;
+  }
+
+}
+
 </style>

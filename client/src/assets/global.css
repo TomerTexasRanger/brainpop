@@ -7,49 +7,62 @@
     --border-gray-light: #dadada;
     --background-gray-light: #fcf8e5;
     --heading: #343a41;
-    --months: rgba(106, 110, 116, 255);
-    --filter-outline: rgba(106, 110, 116, 255);
-    --container-outline: rgba(218, 218, 218, 255);
 }
 
 html {
     box-sizing: border-box;
-    font-size: 1.6vw;
 }
+* {
+    margin: 0;
+    padding: 0;
+    font-weight: lighter;
+}
+*, *:before, *:after {
+    box-sizing: inherit;
+}
+
 
 body {
     font-family: 'Alexandria', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    padding: 1% 15%;
-
-}
-
-h1, h2, h3, h4 {
     color: var(--heading);
-    margin: 0;
-    letter-spacing: -1px;
-    padding: 0;
+    padding: 1% 10%;
 }
 
-h1 {
-    font-size: 1.4rem;
-    font-weight: 500;
+.bp-font-xl {
+    font-size: 2.4em !important;
 }
 
-h2 {
-    font-size: 0.8rem;
-    font-weight: 300;
+.bp-font-lg {
+    font-size: 1.5em !important;
 }
 
-h3 {
-    font-size: 0.7rem;
-    font-weight: 300;
+.bp-font-md {
+    font-size: 1.3em !important;
 }
 
-h4 {
-    font-size: 0.85rem;
-    font-weight: 500;
+.bp-font-sm {
+    font-size: 1.1em !important;
+}
+
+.bp-font-xs {
+    font-size: 0.9em !important;
+}
+
+.bp-font-bold {
+    font-weight: normal !important;
+    text-shadow: 0.01rem 0.01rem 0.07rem !important;
+}
+
+.bp-font-normal {
+    font-weight: normal !important;
+    text-shadow: 0.01rem 0.01rem 0.05rem !important;
+}
+
+.bp-font-light {
+    font-weight: 300 !important;
+    text-shadow: 0.01rem 0.01rem 0.01rem !important;
 }
 
 input[type="text"] {
@@ -66,34 +79,166 @@ input[type="text"] {
 button {
     border: none;
     background-color: transparent;
-    font-weight: bold;
     cursor: pointer;
 }
 
-.bp {
-    background-color: var(--light-turquoise);
+.bp-hidden-content {
+    width: 100%;
+    height: 100%;
+    background-image: url("brain-pop-guy.png");
+    background-repeat: no-repeat;
+    z-index: 10;
+    background-size: contain;
+    background-position: center;
+    pointer-events: none;
 }
 
-.bpjr {
-    background-color: var(--yellow);
-}
-*, *:before, *:after {
-    box-sizing: inherit;
+.bp-hidden-content > * {
+    filter: blur(5px);
 }
 
-@media screen and (max-width: 992px) {
-    html {
-        font-size: 16px;
+.bp-text-turquoise {
+    color: var(--turquoise)
+}
+
+.bp-text-light-gray {
+    color: var(--font-gray-light) !important;
+}
+
+.bp-text-dark {
+    color: var(--heading) !important;
+}
+
+.bp-d-flex {
+    display: flex!important;
+}
+
+.bp-flex-column {
+    flex-direction: column !important;
+}
+
+.bp-align-center {
+    align-items: center !important;
+}
+.bp-justify-end {
+    justify-content: flex-end !important;
+}
+.bp-justify-between {
+    align-content: space-between !important;
+}
+
+.bp-flex-fill {
+    flex-grow: 1 !important;
+}
+.align-items-end {
+    align-items: flex-end!important;
+}
+
+.bp-align-self-center {
+    align-self: center !important;
+}
+
+.bp-flex-gap-1 {
+    gap: 0.2rem!important;
+}
+
+.bp-flex-gap-2 {
+    gap: 0.5rem!important;
+}
+
+.bp-flex-gap-3 {
+    gap: 1rem!important;
+}
+
+.bp-w-4 {
+    max-width: 5% !important;
+}
+
+.bp-w-10 {
+    max-width: 10% !important;
+}
+
+.line-through::after {
+    content: "";
+    line-height: 100%;
+    margin: 0;
+    width: 2px;
+    margin-inline-start: 4rem;
+    border-inline-end: 0.15rem solid var(--border-gray-light);
+}
+
+@media (max-width: 575px) {
+    body{
+        padding: 1rem 1.1rem!important;
     }
-    body {
-        padding: 0 2rem;
+    .bp-font-xl {
+        font-size: 1.3em !important;
+    }
+
+    .bp-font-lg {
+        font-size: 1em !important;
+    }
+
+    .bp-font-md {
+        font-size: 0.8em !important;
+    }
+
+    .bp-font-sm {
+        font-size: 0.6em !important;
+    }
+
+    .bp-font-xs {
+        font-size: 0.4em !important;
     }
 }
-@media screen and (max-width: 576px) {
-    html {
-        font-size: 16px;
+
+@media (min-width: 576px) and (max-width: 991px) {
+    body{
+        padding: 1rem 2rem!important;
     }
-    body {
-        padding: 0 1rem;
+    .bp-font-xl {
+        font-size: 1.8em !important;
+    }
+
+    .bp-font-lg {
+        font-size: 1.3em !important;
+    }
+
+    .bp-font-md {
+        font-size: 1em !important;
+    }
+
+    .bp-font-sm {
+        font-size: 0.9em !important;
+    }
+
+    .bp-font-xs {
+        font-size: 0.6em !important;
     }
 }
+
+@media (min-width: 992px) and  (max-width: 1200px){
+    body{
+        padding: 1.2rem 2.2rem!important;
+    }
+    .bp-font-xl {
+        font-size: 2em !important;
+    }
+
+    .bp-font-lg {
+        font-size: 1.5em !important;
+    }
+
+    .bp-font-md {
+        font-size: 1.1em !important;
+    }
+
+    .bp-font-sm {
+        font-size: 0.9em !important;
+    }
+
+    .bp-font-xs {
+        font-size: 0.6em !important;
+    }
+}
+

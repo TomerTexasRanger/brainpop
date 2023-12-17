@@ -1,154 +1,104 @@
 <template>
   <div class="card">
-    <div :class="{'hidden-card': hidden}" class="card-content">
+    <div class="bp-d-flex bp-justify-end">
+      <slot name="CardActionBtn"></slot>
+    </div>
+    <div class="card-content" :class="{'card-vertical': cardVertical, 'card-horizontal': !cardVertical,'bp-hidden-content': hidden}">
       <div class="card-icon">
-        <div :class=card.product class="icon-background">
-          <img class="card-icon-img" :alt=card.displayTitle :src=card.topicData.iconPath>
-        </div>
+        <slot name="cardIcon"></slot>
       </div>
-      <div class="card-heading">
-        <h4>{{ card.displayTitle }}</h4>
-        <small>{{
-            card.createdDate.toLocaleString('en-US', {month: 'short', day: '2-digit', year: 'numeric', hour: 'numeric'})
-          }}</small>
+      <div class="card-title">
+        <slot name="cardTitle"></slot>
       </div>
-      <div class="card-data" v-if="card.hasScore">
-        <span>Score</span>
-        <span class="card-data-score">{{ card.score }}/{{ card.possibleScore }}</span>
+      <div class="card-data">
+        <slot name="cardData"></slot>
       </div>
-      <button v-if="card.hasZoom" class="action-btn" @click="handleZoom">
-        <i class="fa fa-eye" style="font-size:100%"></i>
-        <span>View work</span>
-      </button>
+      <div class="card-action">
+        <slot name="cardAction"></slot>
+      </div>
     </div>
-    <button @click="setHidden" class="card-hide-icon"><i
-      :class="{'fa fa-eye-slash' : !hidden, 'fa fa-eye': hidden}"></i>
-    </button>
-    <div class="hidden-icon" v-if="hidden">
-      <img alt="hidden icon" src="@/assets/brain-pop-guy.png">
-    </div>
-  </div>
 
+  </div>
 </template>
 
 <script>
+
 export default {
   name: 'base-card',
-  data() {
-    return {
-      hidden: false
-    };
-  },
-  props: {
-    card: {
-      type: Object,
-      default: () => ({}),
-      required: false
+  props:{
+    cardVertical:{
+      type: Boolean,
+      default: false
     },
-  },
-  methods: {
-    handleZoom() {
-      this.$emit('card-action', this.card);
-    },
-    setHidden() {
-      this.card['hidden'] = !this.hidden;
-      this.hidden = !this.hidden
+    hidden:{
+      type: Boolean,
+      default: false
     }
-  },
+
+  }
 };
 </script>
 
 <style scoped>
-
 .card {
   display: flex;
-  border: 0.09rem solid var(--border-gray-light);
+  flex-direction: column;
+  border: 0.15em solid var(--border-gray-light);
   border-radius: 6px;
-  padding: 0.2rem 0.5rem;
+  padding: 0.4em 0.3em;
   position: relative;
+  min-width: 100%;
+  min-height: 100%;
 }
 
 .card-content {
-  padding: 1rem 0.4rem;
   flex-grow: 1;
   display: flex;
+  padding-inline-start: 1rem;
+  padding-inline-end: 2rem;
+  gap: 1.2rem;
+
+}
+.card-horizontal {
   align-items: center;
-  gap: 1rem;
 }
 
-.card-data {
-  color: var(--turquoise);
-  font-size: 0.8rem;
-  font-weight: 400;
-  display: flex;
-  gap: 0.3rem;
+.card-vertical {
+  flex-direction: column;
 }
 
-.card-data .card-data-score {
-  font-weight: 600;
+.card-horizontal .card-icon {
+  width: 70px;
 }
-
-.action-btn {
-  color: var(--turquoise);
-  display: flex;
-  gap: 0.2rem;
-  align-items: center;
-  cursor: pointer;
-  font-size: 0.8rem;
-  font-weight: 600;
+.card-vertical .card-icon{
+  width: 90px;
+  align-self: center;
 }
-
-.card-heading {
+.card-horizontal .card-title {
   flex-grow: 1;
-  align-self: baseline;
+}
+.card-vertical .card-title{
+  align-self: center;
+  text-align: center;
+}
+
+.card-vertical .card-data {
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  gap: 0.4rem;
+  justify-content: space-between;
+
 }
 
-.card-heading small {
-  color: var(--font-gray-light);
-  font-size: 0.7rem;
+.card-vertical .card-action {
+  align-self: center;
+}
+@media (max-width: 575px) {
+  .card-vertical .card-icon{
+    width: 60px;
+    align-self: center;
+  }
 }
 
-.card-icon {
-  margin-bottom: 0.8rem;
-  max-width: 6%;
-}
 
-.icon-background {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-radius: 50%;
-  width: fit-content;
-  padding: 0.5rem;
-}
-
-.card-icon-img {
-  width: 100%;
-}
-
-.card-hide-icon {
-  display: flex;
-  justify-content: flex-end;
-  font-size: 0.7rem;
-}
-
-.hidden-icon {
-  position: absolute;
-  width: 4rem;
-  left: 50%;
-}
-
-.hidden-icon img {
-  width: 100%;
-}
-
-.hidden-card {
-  background-color: transparent;
-  pointer-events: none;
-  filter: blur(5px);
-}
 </style>

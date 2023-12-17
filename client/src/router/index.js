@@ -2,7 +2,7 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import AppFeed from "@/views/AppFeed.vue";
 import {fetchActivities, setModalData} from "@/router/routeGuards";
-import FeedItemView from "@/components/FeedItemView.vue";
+import FeedItemView from "@/components/BaseModal.vue";
 
 Vue.use(VueRouter);
 
