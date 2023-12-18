@@ -48,6 +48,9 @@ understanding, and navigating through the project.
 - Every group employees a generic card component with a horizontal and vertical display types for mobile and modal displays.
 - Activities timline also uses a generic Modal component that displays cards in the vertical mode.
 
+![brainpop schema](https://github.com/TomerTexasRanger/brainpop/assets/81175937/9a398a6c-6a76-4c36-ac99-94d06ff059ab)
+
+
 ## Filtering and Variants
 - The application includes free text and activity type filters, handled by Vuex.
 - Two product variants, 'bp' and 'bpjr', influence the topic icon rendering, managed via dynamic CSS.
