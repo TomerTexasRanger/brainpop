@@ -18,16 +18,15 @@ understanding, and navigating through the project.
 # Development Approach and Tools Used
 
 ## Development Approach
-- My experience is primarely with Angular 14, and code structure somewhat hints to that fact :).
+-  Most of the data fetching and manipulation will be handles in a state manager and services.
 
 ## Tools and Libraries
 - Vuex library is incorporated for state management.
 - Font Awesome CDN is used for basic icons.
 
 ## Tool Exclusions
-- Vue plugins, libraries, or frameworks were intentionally omitted.
-- Bootstrap, SCSS, and TypeScript were not used to maintain a lighter bundle size, given the project's scale.
-
+- Bootstrap and SCSS were unnecessary considering the scale of the assignment (normally I would prefer scss).
+- Normally I would use typescript but that would require making some config changes and I decided to keep it simple.
 
 
 # Application Features and Implementation Details
@@ -39,14 +38,15 @@ understanding, and navigating through the project.
 - Activities V1 API is utilized for the main activities feed, with the route named "v1".
 - Activities V2 API is also supported, demonstrating flexibility with different data structures.
 
-## Modal and Router Configuration
-- Activity details are presented in a modal, similar to the Zoom screenshot.
-- Direct access to the modal is enabled through router configuration, combining route guards and Vuex.
+## Data Flow
+- Data fetch is triggerd by route resolvers. The client routes match the service API and fetch the data accordingly.  
+- Once data is fetched, the resolver (guard in vue) will activate the state manager which will process and unify the data using the Formatter service.
+- Only when the data Is processed, the view will be created, now having the appropriete generic data. 
 
 ## Data Organization
-- Activities timeline is grouped and ordered by months for better clarity.
-- A service is implemented to sort activities by date and group them monthly.
-- Activities have specific attributes for rendering, managed using object-oriented programming principles.
+- Activities timeline is a custom view. It employees a custom group component which loops the grouped data (by months).
+- Every group employees a generic card component with a horizontal and vertical display types for mobile and modal displays.
+- Activities timline also uses a generic Modal component that displays cards in the vertical mode.
 
 ## Filtering and Variants
 - The application includes free text and activity type filters, handled by Vuex.
@@ -61,17 +61,16 @@ understanding, and navigating through the project.
 - The application displays 10 activities at a time and supports loading more via a 'Load more' button, managed by the aforementioned service.
 
 ## Activity Hiding Feature
-- Each activity row includes a hide icon, allowing users to hide specific activities. The hidden state is designed to be persistent across filters.
+- Each activity row includes a hide icon, allowing users to hide specific activities. The hidden state is designed to be persistent across filters. This "hidden-content" css class is generic and could be applyed on every element.
 
 ## Autosuggest in Text Filter
 - An autosuggest feature is added to the text filter input, utilizing topics names from the main API V1 feed for suggestions.
 
 
-# Caveats and Limitations
+# Caveats
+- This is my first experience using vue (my background is Angular and a bit of react). I tried to implement as many features as i could learn. hope i did ok.
+- I don't have experience with unit testing in vue (but Im here to learn :).
 
-- Responsivity: Due to time constraints, some compromises were made in the app's responsiveness.
-- HTML Tag Usage: A non-standard approach was taken with the HTML tag, which was a necessary decision under the given circumstances.
-- Apology: I acknowledge that these decisions may not align with best practices in web development, and I apologize for any inconvenience caused.
 
 
 Thank and enjoy.
